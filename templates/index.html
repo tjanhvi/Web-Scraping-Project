@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: rgb(63, 59, 54); width:100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNews Post</title>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body>
+    <div class="mb-10 top-1 w-screen flex flex-col justify-center items-center">
+        <img src="../static/Images/Logo.png" class="w-64 h-64" alt="Logo Image">
+    </div>
+    <div class="bottom-6 m-auto relative" id="container" style="width:580px; height:640px;">
+        <img src="" id="bg1" width="614px" height="700px">
+        <span class=" font-mono text-lg absolute text-white whitespace-pre-line text-justify" id="News"
+            style="width: 400px; top: 120px; left: 50px; line-height: 2em;">
+            {{News|safe}}
+            <!-- These curly braces are a gateway for python variables and functions (via flask) to Front-end. This is done with the help of Jinja template engine.-->
+        </span>
+    </div>
+    <div id="canvasWrapper" class="mt-44 mb-10 w-screen flex justify-center items-center">
+        <button
+            class="text-white p-3 rounded-md font-sans text-xl bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+            onclick="download()">Download Post</button>
+    </div>
+
+    <script>
+        var newbg = document.getElementById("bg1");
+        var background = new Image();
+        background.src = "static/Images/" + (Math.floor(Math.random() * (16)) + 1) + ".jpg";
+        newbg.src = background.src;
+        console.log(newbg.src);
+    </script>
+    <script src="/static/js/h2c.min.js"></script>
+    <script>
+        function download() {
+            html2canvas(document.getElementById("container"), { height: 700, width: 614 }).then(canvas => {
+                //document.body.appendChild(canvas);
+                var a = document.createElement('a');
+                a.href = canvas.toDataURL("Images/jpg").replace("Images/jpg", "Images/octet-stream");
+                a.download = 'TechNewsPost.jpg';
+                a.click();
+            });
+        }
+    </script>
+</body>
+</html>
